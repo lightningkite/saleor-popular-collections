@@ -1,0 +1,78 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% load materializecss %}
+{% load staticfiles %}
+{% load utils %}
+
+{% block title %}
+  {% trans "Popular Collections" context "Dashboard popular collections list" %} - {{ block.super }}
+{% endblock %}
+
+{% block body_class %}body-customers{% endblock %}
+
+{% block menu_popular_collections_class %}active{% endblock %}
+
+{% block header_extra %}
+  {% if perms.popular_collections.edit %}
+    <div class="btn-fab-fixed">
+      <a href="{% url 'popular-collection-dashboard-create' %}" class="btn-fab-default waves-effect waves-light" title="{% trans "Add popular collection" context "Popular collection list add button text" %}">
+        <svg data-src="{% static "dashboard/images/add.svg" %}" />
+      </a>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+  <ul class="breadcrumbs">
+    <li class="visible-s">
+      {% trans "Popular Collections" context "Dashboard popular collections list" %}
+    </li>
+  </ul>
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col s12 l9">
+      {% if popular_collections %}
+        <div class="card">
+          <div class="data-table-container">
+            <table class="bordered highlight data-table data-table-description">
+              <thead>
+                <tr>
+                  {% trans "Name" context "Dashboard popular collections list table header name" as label %}
+                  {% sorting_header 'name' label %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for popular_collection in popular_collections %}
+                  <tr data-action-go="{% if perms.popular_collections.edit %}{% url 'popular-collection-dashboard-detail' pk=popular_collection.pk %}{% endif %}">
+                    <td>
+                      {{ popular_collection }}
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {% paginate popular_collections %}
+      {% else %}
+        {% if is_empty %}
+          {% include 'popular_collections/dashboard/zero_page.html' %}
+        {% else %}
+          <div class="col s12">
+            <div class="not-found">
+              <p class="grey-text">
+                {% trans "No popular collections found." context "Empty popular collections table message" %}
+              </p>
+            </div>
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+    <div class="col s12 l3" id="filters">
+      {% if not is_empty %}{% filters filter_set %}{% endif %}
+    </div>
+  </div>
+{% endblock %}
+
