@@ -12,7 +12,7 @@ def popular_collections_side_nav(context):
     return context
 
 @register.inclusion_tag('includes/popular_collections.html')
-def popular_collections(super_collection):
+def popular_collections(super_collection = None):
     collections = Collection.objects.filter(popular__isnull=False)
     if super_collection:
         for c in collections:
