@@ -9,7 +9,7 @@
       <a href="{{ popular_collection.collection.get_absolute_url }}" class="link--clean">
         <div class="text-center">
           <div>
-              {% if popular_collection.collection.background_image %}<img class="img-responsive lazypreload lazyloaded" src="{{ popular_collection.collection.background_image.url }}" alt="{{ popular_collection.collection }}" />{% endif %}
+              {% if popular_collection.collection.background_image %}<img alt="" class="img-responsive lazypreload lazyloaded" src="{{ popular_collection.collection.background_image.url }}" alt="{{ popular_collection.collection }}" />{% endif %}
             <span class="product-list-item-name" title="{{ popular_collection.collection}}">{{ popular_collection.collection}}</span>
           </div>
         </div>
