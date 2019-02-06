@@ -22,7 +22,7 @@ def popular_collection_list(request):
     popular_collection_filter = PopularCollectionFilter(
         request.GET, queryset=popular_collections)
     popular_collections = get_paginator_items(
-        popular_collections, settings.DASHBOARD_PAGINATE_BY, request.GET.get('page'))
+        popular_collection_filter.qs, settings.DASHBOARD_PAGINATE_BY, request.GET.get('page'))
     # Call this so that cleaned_data exists on the filter_set
     popular_collection_filter.form.is_valid()
     ctx = {
