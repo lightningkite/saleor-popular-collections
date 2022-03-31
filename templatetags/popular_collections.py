@@ -7,7 +7,7 @@ from saleor.product.models import Collection
 register = template.Library()
 
 PopularCollection = importlib.import_module(
-    "saleor-popular-collections.popular_collections.models").PopularCollection
+    "popular_collections.models").PopularCollection
 
 
 @register.inclusion_tag(
